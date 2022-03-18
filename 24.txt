@@ -1,0 +1,198 @@
+Lightning Training_24Feb2022 
+
+ 
+
+R5) Create component that displays data from Position Object to be added into “Info” component of the Mobile App. 
+
+ 
+
+Solution: Data connectivity with Position__c to fetch details using INIT handler. 
+
+ 
+
+R6) Create component that displays data from Candidate Object to be loaded into “Info component 
+
+ 
+
+Solution: Data connectivity with Candidate__c to fetch details using component Renderer. 
+
+Renderer.js in the component bundle contains 4 functions 
+
+render 
+
+afterRender 
+
+reRender 
+
+unRender 
+
+ 
+
+R7) Create component to provide menu based wire frame for Job Applications that need to be embedded into “Application” tab of mobile app. 
+
+ 
+
+Solution : component with button menu and menu items for Applicant. 
+
+ 
+
+ 
+
+R8) Create component to display records from Job_Application__c object based on the recent applications created in the Recruitment App and show information of Applicant and related Parent Object records in tabular format. Load that component into the body of “Application” TAB for providing info to HR while opening mobileapp. 
+
+ 
+
+Solution : 
+
+Job_Application__c   ------ Position__c (Master) 
+
+        ------ Candidate__c (Master) 
+
+ 
+
+  R9) Add event handler on Application Tab as when user clicks on “Clear” menu item, Applications data in the body has to be cleared. 
+
+ 
+
+Solution : dynamically removing component from Page at runtime. 
+
+ 
+
+ 
+
+R10) when user selects “ReLoad” option in menu, load to Applications data into the body of “ApplicationHome” component. 
+
+ 
+
+Solution: dynamically add components into the Page at runtime. 
+
+ 
+
+R11)  create lightning component for developing record form to insert record into Job Application object and launch the component when “New” menu item is selected from the Application TAB. 
+
+ 
+
+Hint : instead of using “Apex” controller, use “Lightning Data Service” components of framework. 
+
+Lightning Data Service helps in DML transactions where a single record is processed at a time 
+
+lightning:recordForm 
+
+lightning:recordViewForm 
+
+lightning:recordEditForm 
+
+ 
+
+ 
+
+solution : prepare component using Lightning Data Service and dynamically load into body of Applicant Info using menu item action. 
+
+ 
+
+R12) 
+
+Create lightning component to display Job Applications using “Search functionality”.  
+
+Create “ApplicationSearch” component for searching applications based on their stage. 
+
+Create “ApplicationDisplay” component to show the records for what has been searched in “ApplicationSearch” component. 
+
+ Hint : information captured in ApplicationSearch component should be passed to ApplicationDisplay component to fetch the data. 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Communication Between components in Lightning Framework is implemented using “Custom Events” 
+
+CustomEvent is created by developer, need to be fired or “dispatched” from one component and handled by other components. 
+
+ 
+
+In Lightning Framework, there are two types of “Custom Events” 
+
+Component Event (used for sending event from CHILD to PARENT components in Hierarchy) 
+
+Application Event (used to send event from ANY-ANY component within the Page) 
+
+ 
+
+Steps for creating COMPONENT event: 
+
+Create Event with type as COMPONENT and declare attributes using which data can be sent in the event. 
+
+Register the event in CHILD component with unique name. 
+
+Instantiate the event in CHILD component javascript, bind the data what need to be transferred and dispatch/fire the event. 
+
+HANDLE the event using dynamic event handler in PARENT component and access the data that has been shared using the event. 
+
+ 
+
+ 
+
+Since using COMPONENT event, data is sent from CHILD only to the associated PARENT components, this process is known as EVENT BUBBLING. 
+
+R13) Create component to display Job Applications based on “Application Status” 
+
+Create a lightning component “StatusComp” which displays different Status values as Button Group 
+
+Create lightning component “StatusDisplay” that will display Application records as Individual CARDS 
+
+Load both components into another component “StatusShow” that will be called from “Show” menu item. 
+
+ 
+
+Hint : what button end user clicks in StatusComp, the label should be sent to other component in same page “StatusDisplay” for getting records from Salesforce. 
+
+Note: StatusComp and StatusDisplay are INDEPENDENT components. 
+
+ 
+
+Solution : use “Application Event” type of Custom Event to send data across components 
+
+ 
+
+Page Break
+ 
+
+Steps to define APPLICATION event: 
+
+ 
+
+Create custom event with type APPLICATION  and declare attributes which act as parameters for transferring data. 
+
+Instantiate the APPLICATION event in SOURCE component, bind the data and fire the event so that information is broadcasted to other components in same page. 
+
+In DESTINATION component, handle APPLICATION event to receive the data and implement business logic. 
+
+ 
+
+As data communication through APPLICATION events doesn’t require components to be in PARENT and CHILD, and data can be sent from ANY component to ANY Other component in the same page, it is referred as PUBLISHER-SUBSCRIBER modal. 
+
+ 
+
+ 
